@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  jazzup-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: jazzup-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      # Bind mount para hot reload - apenas arquivos essenciais
+      - ./excalidraw-app/src:/app/excalidraw-app/src
+      - ./excalidraw-app/public:/app/excalidraw-app/public
+      - ./packages:/app/packages
+      - ./constants:/app/constants
+      # Arquivo .env para variáveis de ambiente
+      - ./.env:/app/.env
+      # Node modules como volume
+      - jazzup-node-modules-dev:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_APP_ENABLE_ESLINT=false
+      - VITE_APP_PORT=5173
+      - VITE_APP_AZURE_GPT4O_ENDPOINT=https://affinify-foundry-resource.cognitiveservices.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2025-01-01-preview
+      - VITE_APP_AZURE_GPT4O_KEY=${AZURE_GPT4O_KEY}
+      - VITE_APP_AZURE_FLUX_ENDPOINT=https://affinify-foundry-resource.services.ai.azure.com/openai/deployments/FLUX.1-Kontext-pro/images/generations?api-version=2025-04-01-preview
+      - VITE_APP_AZURE_FLUX_EDIT_ENDPOINT=https://affinify-foundry-resource.cognitiveservices.azure.com/openai/deployments/FLUX.1-Kontext-pro/images/edits?api-version=2025-04-01-preview
+      - VITE_APP_AZURE_FLUX_KEY=${AZURE_FLUX_KEY}
+    restart: always
+    networks:
+      - affinify-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  jazzup-node-modules-dev:
+
+networks:
+  affinify-network:
+    driver: bridge
+

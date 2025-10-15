@@ -107,9 +107,9 @@ export const ExportToExcalidrawPlus: React.FC<{
           }}
         />
       </div>
-      <h2>Excalidraw+</h2>
+      <h2>JazzUp</h2>
       <div className="Card-details">
-        {t("exportDialog.excalidrawplus_description")}
+        Salvar a cena na sua área de trabalho JazzUp.
       </div>
       <ToolButton
         className="Card-button"

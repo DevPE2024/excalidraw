@@ -1,6 +1,10 @@
 {
   "private": true,
-  "name": "excalidraw-monorepo",
+  "name": "affinify-canvas",
+  "version": "1.0.0",
+  "description": "Affinify Canvas - Plataforma de Design Colaborativo com IA",
+  "author": "Affinify Team",
+  "homepage": ".",
   "packageManager": "yarn@1.22.22",
   "workspaces": [
     "excalidraw-app",
@@ -46,7 +50,6 @@
   "engines": {
     "node": "18.0.0 - 22.x.x"
   },
-  "homepage": ".",
   "prettier": "@excalidraw/prettier-config",
   "scripts": {
     "build-node": "node ./scripts/build-node.js",
@@ -90,5 +93,8 @@
   },
   "resolutions": {
     "strip-ansi": "6.0.1"
+  },
+  "dependencies": {
+    "lucide-react": "0.546.0"
   }
 }

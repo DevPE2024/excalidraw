@@ -6,20 +6,25 @@ import { ExitZenModeAction, UndoRedoActions, ZoomActions } from "../Actions";
 import { HelpButton } from "../HelpButton";
 import { Section } from "../Section";
 import Stack from "../Stack";
+import { FloatingAiAssistant } from "../FloatingAiAssistant";
 
 import type { ActionManager } from "../../actions/manager";
-import type { UIAppState } from "../../types";
+import type { UIAppState, BinaryFiles } from "../../types";
 
 const Footer = ({
   appState,
   actionManager,
   showExitZenModeBtn,
   renderWelcomeScreen,
+  files,
+  elements,
 }: {
   appState: UIAppState;
   actionManager: ActionManager;
   showExitZenModeBtn: boolean;
   renderWelcomeScreen: boolean;
+  files?: BinaryFiles;
+  elements?: readonly any[];
 }) => {
   const { FooterCenterTunnel, WelcomeScreenHelpHintTunnel } = useTunnels();
 
@@ -59,6 +64,8 @@ const Footer = ({
           "transition-right": appState.zenModeEnabled,
         })}
       >
+        {/* Floating AI Assistant acima do botão de ajuda */}
+        <FloatingAiAssistant appState={appState} files={files} elements={elements} />
         <div style={{ position: "relative" }}>
           {renderWelcomeScreen && <WelcomeScreenHelpHintTunnel.Out />}
           <HelpButton

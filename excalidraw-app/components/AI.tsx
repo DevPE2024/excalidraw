@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   DiagramToCodePlugin,
   exportToBlob,
@@ -9,14 +10,76 @@ import { getDataURL } from "@excalidraw/excalidraw/data/blob";
 import { safelyParseJSON } from "@excalidraw/common";
 
 import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types";
+import { AzureAIChat } from "./AzureAIChat";
+import { AzureImageGenerator } from "./AzureImageGenerator";
+import { isAzureAIConfigured } from "../services/azureAI";
 
 export const AIComponents = ({
   excalidrawAPI,
 }: {
   excalidrawAPI: ExcalidrawImperativeAPI;
 }) => {
+  const [showChat, setShowChat] = useState(false);
+  const [showImageGen, setShowImageGen] = useState(false);
+  const azureConfigured = isAzureAIConfigured();
+
   return (
     <>
+      {/* Azure AI Chat Dialog */}
+      {azureConfigured && showChat && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "80px",
+            right: "20px",
+            zIndex: 9999,
+          }}
+        >
+          <AzureAIChat
+            onClose={() => setShowChat(false)}
+            onGenerateDiagram={(data) => {
+              try {
+                // Parse and insert diagram data
+                const parsedData = JSON.parse(data);
+                console.log("Diagram data:", parsedData);
+                // Here you would integrate with Excalidraw API to insert elements
+                setShowChat(false);
+              } catch (err) {
+                console.error("Failed to parse diagram data:", err);
+              }
+            }}
+          />
+        </div>
+      )}
+
+      {/* Azure Image Generator Dialog */}
+      {azureConfigured && showImageGen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 9999,
+          }}
+        >
+          <AzureImageGenerator
+            onClose={() => setShowImageGen(false)}
+            onImageGenerated={(blob, prompt) => {
+              console.log("Image generated:", prompt);
+              // Here you would integrate with Excalidraw to insert the image
+              // For now, just download it
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `affinify-${Date.now()}.png`;
+              link.click();
+              URL.revokeObjectURL(url);
+            }}
+          />
+        </div>
+      )}
+
       <DiagramToCodePlugin
         generate={async ({ frame, children }) => {
           const appState = excalidrawAPI.getAppState();

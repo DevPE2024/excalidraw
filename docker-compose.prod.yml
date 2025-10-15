@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  affinify-canvas-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: affinify-canvas-prod
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - affinify-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  affinify-network:
+    driver: bridge
+

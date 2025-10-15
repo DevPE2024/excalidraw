@@ -319,9 +319,9 @@
     "link_title": "Link compartilhável",
     "link_details": "Exportar como link de apenas leitura.",
     "link_button": "Exportar link",
-    "excalidrawplus_description": "Salvar a cena na sua área de trabalho Excalidraw+.",
+    "excalidrawplus_description": "Salvar a cena na sua área de trabalho JazzUp.",
     "excalidrawplus_button": "Exportar",
-    "excalidrawplus_exportError": "Não é possível exportar para o Excalidraw+ neste momento..."
+    "excalidrawplus_exportError": "Não é possível exportar para o JazzUp neste momento..."
   },
   "helpDialog": {
     "blog": "Leia o nosso blog",
@@ -467,7 +467,7 @@
   "welcomeScreen": {
     "app": {
       "center_heading": "Todos os dados são salvos localmente no seu navegador.",
-      "center_heading_plus": "Você queria ir para o Excalidraw+ em vez disso?",
+      "center_heading_plus": "Você queria ir para o JazzUp em vez disso?",
       "menuHint": "Exportar, preferências, idiomas..."
     },
     "defaults": {
@@ -497,9 +497,9 @@
         "description": "Exportar os dados da cena para um arquivo que você poderá importar mais tarde."
       },
       "excalidrawPlus": {
-        "title": "Excalidraw+",
-        "button": "Exportar para Excalidraw+",
-        "description": "Salvar a cena na sua área de trabalho Excalidraw+."
+        "title": "JazzUp",
+        "button": "Exportar para JazzUp",
+        "description": "Salvar a cena na sua área de trabalho JazzUp."
       }
     },
     "modal": {

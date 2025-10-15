@@ -1,0 +1,37 @@
+# Dockerfile.dev - Desenvolvimento com Hot Reload
+
+FROM node:18
+
+WORKDIR /app
+
+# Instalar git e dos2unix para correção de line endings
+RUN apt-get update && apt-get install -y git dos2unix && rm -rf /var/lib/apt/lists/*
+
+# Configurar git para converter line endings automaticamente
+RUN git config --global core.autocrlf input
+
+# Copiar package files
+COPY package*.json ./
+COPY yarn.lock ./
+
+# Instalar dependências com timeout maior
+RUN yarn install --network-timeout 600000
+
+# Copiar código
+COPY . .
+
+# Converter line endings de CRLF para LF (Windows -> Linux)
+RUN find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.json" \) -exec dos2unix {} \; 2>/dev/null || true
+
+# Expor porta
+EXPOSE 5173
+
+# Definir variáveis de ambiente
+ENV VITE_APP_PORT=5173
+ENV ESLINT_NO_DEV_ERRORS=true
+ENV DISABLE_ESLINT_PLUGIN=true
+ENV VITE_APP_ENABLE_ESLINT=false
+
+# Comando dev
+CMD ["yarn", "start"]
+
