@@ -4,6 +4,7 @@ import {
   TTDDialogTrigger,
   CaptureUpdateAction,
   reconcileElements,
+  useEditorInterface,
 } from "@excalidraw/excalidraw";
 import { trackEvent } from "@excalidraw/excalidraw/analytics";
 import { getDefaultAppState } from "@excalidraw/excalidraw/appState";
@@ -340,6 +341,8 @@ const ExcalidrawWrapper = () => {
   const { editorTheme, appTheme, setAppTheme } = useHandleAppTheme();
 
   const [langCode, setLangCode] = useAppLangCode();
+
+  const editorInterface = useEditorInterface();
 
   // initial state
   // ---------------------------------------------------------------------------
@@ -819,6 +822,7 @@ const ExcalidrawWrapper = () => {
                 onSelect={() =>
                   setShareDialogState({ isOpen: true, type: "share" })
                 }
+                editorInterface={editorInterface}
               />
             </div>
           );
